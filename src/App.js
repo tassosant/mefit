@@ -12,6 +12,8 @@ import store from './reduxParts/store';
 import Exercise from './views/Exercise';
 import ExerciseFormAdd from './forms/exercise/ExerciseFormAdd';
 import ExerciseGetAll from './forms/exercise/ExerciseGetAll';
+import ExerciseListFormUpdate from './forms/exercise/ExerciseListFormUpdate';
+import WorkoutListFormUpdate from './forms/workout/WorkoutListFormUpdate';
 
 
 function App() {
@@ -31,6 +33,8 @@ function App() {
         <Route path="/exercise" element={<Exercise/>}/>
         <Route path="/exerciseAdd" element={<ExerciseFormAdd/>}/>
         <Route path="/exerciseGetAll" element={<ExerciseGetAll/>}/>
+        <Route path="/exerciseUpdate" element={<ExerciseListFormUpdate/>}/>
+        <Route path="/workoutUpdate" element={<WorkoutListFormUpdate/>}/>
       </Routes>  
     </div>
     </BrowserRouter>

@@ -46,9 +46,14 @@ export const deleteWorkout = createAsyncThunk("workout/deleteWorkout", async (id
 });
 
 const initialState = {
-  workout: [],
-  status: "idle",
-  error: null,
+    workout: {
+        workouts: [],
+        status: "idle",
+        error: ""
+    }
+//   workout: [],
+//   status: "idle",
+//   error: null,
 };
 
 const workoutSlice = createSlice({

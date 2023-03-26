@@ -45,7 +45,7 @@ const ExerciseFormAdd=(exerciseStructure)=>{
         />
       </label>
       <label>
-        Targett Muscle Group:
+        Target Muscle Group:
         <input
         type="text"
           value={formData.tmg}

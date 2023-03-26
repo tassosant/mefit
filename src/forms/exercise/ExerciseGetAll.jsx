@@ -5,7 +5,8 @@ import ExerciseItem from "./ExerciseItem";
 
 const ExerciseGetAll = ()=>{
     const dispatch = useDispatch();
-    const {exercise, status} = useSelector((state)=>state.items);
+    const {exercise, status} = useSelector((state)=>state.exercises);
+    // const {workout, status: bbb} = useSelector((state)=>state.items);
     const [exercisesFetched,setExercisesFetched] =useState([])
     const [loaded,setLoaded]=useState(false)
     
