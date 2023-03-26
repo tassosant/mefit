@@ -4,30 +4,40 @@ import { selectExercisesByIds, updateExercise } from "../../reduxParts/reducers/
 import { updateWorkout } from "../../reduxParts/reducers/workoutSlice";
 import ExerciseItem from "../exercise/ExerciseItem";
 
-const WorkoutItemUpdate = ({exercises, workout})=>{
-    const dispatch = useDispatch();
+const WorkoutItemUpdate = ({exercises, workout, dispatch})=>{
+    // const dispatch = useDispatch();
     const [loaded,setLoaded]=useState(false);
     const [formData,setFormData]=useState(workout);
-    const [exercisesPool,setExercisesPool]=useState([]);
+    const [exercisesPool,setExercisesPool]=useState(exercises);
     const [workoutStable,setWorkoutStable]=useState(workout);
-    const {state:exerciseState, exercise:exercisesInit, status: statusExercises} =useSelector((state)=>state.exercises);
+    // const {state:exerciseState, exercise:exercisesInit, status: statusExercises} =useSelector((state)=>state.exercises);
     console.log(formData);
     useEffect(()=>{
         if(!loaded){
-            dispatch(selectExercisesByIds(exercisesInit,workout.exercise))
+            console.log(exercises);
+            dispatch(selectExercisesByIds(workout.exercise))
             setWorkoutStable(workout);
+            if(exercisesPool!=exercises)
+                setExercisesPool(exercises)
             // if(statusExercises=='succeeded'){
             //     setExercisesPool(exercisesInit)
             // }
-            
-    }   
-    },[dispatch,workout])
-    useEffect(()=>{
-        if(statusExercises=='succeeded'){
-                setExercisesPool(exercisesInit)
-                setLoaded(true);
-            }
-    },[statusExercises])
+            setLoaded(true)     
+        }
+        if(workoutStable!=workout){
+            setWorkoutStable(workout)
+        }   
+        // if(loaded){
+        //     setExercisesPool(exercises)
+        // }
+    },[dispatch,workout,loaded,exercisesPool])
+    // useEffect(()=>{
+    //     if(statusExercises=='succeeded'){
+    //             setExercisesPool(exercises)
+    //             setLoaded(true);
+    //             console.log('mpika');
+    //         }
+    // },[statusExercises])
     const handleSubmit =(event)=>{
         // event.preventDefault();
         console.log('Submit button Clicked');

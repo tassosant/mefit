@@ -14,17 +14,17 @@ const apiKey = process.env.REACT_APP_API_LOCAL_KEY;
 );
  */
 
-export const selectExercisesByIds = createAsyncThunk("exercise/selectExercisesByIds", async (state,ids) => {
-  const selectedItems = [];
-  console.log(ids);
-  ids.forEach((id) => {
-    const item = state.exercises.exercise.find((item) => item.id === id);
-    if (item) {
-      selectedItems.push(item);
-    }
-  });
-  return selectedItems;
-});
+// export const selectExercisesByIds = createAsyncThunk("exercise/selectExercisesByIds", async (state,ids) => {
+//   const selectedItems = [];
+//   console.log(ids);
+//   ids.forEach((id) => {
+//     const item = state.exercises.exercise.find((item) => item.id === id);
+//     if (item) {
+//       selectedItems.push(item);
+//     }
+//   });
+//   return selectedItems;
+// });
 
 
 export const fetchExercises = createAsyncThunk("exercise/fetchExercises", async () => {
@@ -83,7 +83,13 @@ const initialState = {
 const exerciseSlice = createSlice({
   name: "exercise",
   initialState,
-  reducers:{}
+  reducers:{
+    selectExercisesByIds :(state, action) =>{
+      console.log(action.payload);
+      console.log(state.exercise.exercise);
+       return state.exercise.exercise.filter((exercise) => action.payload.includes(exercise.id))
+      }
+  }
       
   
   ,
@@ -101,21 +107,21 @@ const exerciseSlice = createSlice({
         state.status = "failed";
         state.error = action.error.message;
       })
-      .addCase(selectExercisesByIds.pending,(state)=>{
-        console.log('pending');
-        state.status = "loading";
-        state.error = null;
-      })
-      .addCase(selectExercisesByIds.fulfilled, (state, action) => {
-        console.log('fulfilled');
-        state.status = "succeeded";
-        state.exercise = action.payload;
-      })
-      .addCase(selectExercisesByIds.rejected, (state, action) => {
-        console.log('failed');
-        state.status = "failed";
-        state.error = action.error.message;
-      })
+      // .addCase(selectExercisesByIds.pending,(state)=>{
+      //   console.log('pending');
+      //   state.status = "loading";
+      //   state.error = null;
+      // })
+      // .addCase(selectExercisesByIds.fulfilled, (state, action) => {
+      //   console.log('fulfilled');
+      //   state.status = "succeeded";
+      //   state.exercise = action.payload;
+      // })
+      // .addCase(selectExercisesByIds.rejected, (state, action) => {
+      //   console.log('failed');
+      //   state.status = "failed";
+      //   state.error = action.error.message;
+      // })
       .addCase(addExercise.fulfilled, (state, action) => {
         state.exercise.push(action.payload);
       })
@@ -127,7 +133,9 @@ const exerciseSlice = createSlice({
       })
       .addCase(deleteExercise.fulfilled, (state, action) => {
         state.exercise = state.exercise.filter((item) => item.id !== action.payload);
-      });
+      })
+      .addCase(selectExercisesByIds, (state,ids) =>{
+        return state.exercise.exercise.filter((exercise) => ids.includes(exercise.id))});
   },
 });
 
@@ -139,5 +147,7 @@ export const selectExerciseById = (state, id) => state.exercise.exercise.find((i
 export const selectExercisesStatus = (state) => state.exercise.status;
 
 export const selectExercisesError = (state) => state.exercise.error;
+
+export const{ selectExercisesByIds} =exerciseSlice.actions;
 
 export default exerciseSlice.reducer;

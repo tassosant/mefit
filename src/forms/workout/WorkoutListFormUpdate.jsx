@@ -26,15 +26,16 @@ const WorkoutListFormUpdate =()=>{
         if(statusExercises==="succeeded"){
             setExercises(exercisesInit);
             console.log(exercises);
+            setLoaded(true);
         }
     },[statusExercises])
     const date = String(new Date())
     return(
         <>
             <h1>Exercises Update</h1>
-            {workouts.map(
+            {loaded&& workouts.map(
                 (workout,index)=>{
-                    return <WorkoutItemUpdate key={`${date}_${index}`} workout={workout} exercises={exercises} />
+                    return <WorkoutItemUpdate key={`${date}_${index}`} workout={workout} exercises={exercises} dispatch={dispatch}/>
                 }
             )}
         </>
