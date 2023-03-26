@@ -13,7 +13,7 @@ function WorkoutList() {
 
   const navigate = useNavigate();
 
-  const { workout, status, error } = useSelector((state) => state.workouts);
+  const { workouts, status, error } = useSelector((state) => state.workouts);
 
   useEffect(() => {
     dispatch(fetchWorkouts());
@@ -37,13 +37,16 @@ function WorkoutList() {
         </thead>
         <tbody>
           {status === 'succeeded' &&
-            workout.map((el) => (
+            workouts.map((workout) => (
               <tr key={uuidv4()}>
-                <td>{el.name}</td>
-                <td>{el.type}</td>
-                <td>{el.complete}</td>
+                <td>{workout.name}</td>
+                <td>{workout.type}</td>
+                <td>{workout.complete}</td>
                 <td>
-                  <button type='button' onClick={() => onEditBtnClick(el.id)}>
+                  <button
+                    type='button'
+                    onClick={() => onEditBtnClick(workout.id)}
+                  >
                     <i className='fa-solid fa-pen-to-square'></i>
                   </button>
                 </td>
