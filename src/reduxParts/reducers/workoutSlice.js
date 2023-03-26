@@ -71,8 +71,7 @@ const workoutSlice = createSlice({
   reducers: {
     selectworkoutById: (state, action) => {
       const { payload } = action;
-      console.log(payload);
-      state.workout = state.workouts.find((item) => item.id === Number(payload));
+      state.workout = {...state.workouts.find((item) => item.id === Number(payload))};
     }
   },
   extraReducers: (builder) => {
